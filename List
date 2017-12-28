@@ -1,0 +1,3 @@
+names = ['Tom','Any','James']
+for n in names:
+    print(n)
