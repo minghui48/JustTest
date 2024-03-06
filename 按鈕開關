@@ -1,0 +1,55 @@
+/*
+  克服開關彈跳
+*/
+const byte SW=5;
+const byte LED[]= {4,16,17} ;
+bool lastState = LOW ;
+bool toggle = LOW ; // 開關
+byte click = 0;
+byte count = 0;
+byte button=0;
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600) ;
+  pinMode(SW,INPUT) ;
+  for (byte i=0;i<=2;i++){
+    pinMode(LED[i],OUTPUT);
+  }
+  
+  
+  lastState = digitalRead(SW) ;
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  bool b1 = digitalRead(SW) ;
+
+  if (lastState!=b1) {
+    delay(20) ;
+    bool b2 = digitalRead(SW) ;
+    if(b1==b2) {
+      lastState = b1 ;
+      click ++ ;
+    }
+   }
+
+   if (click==2){
+    click = 0;
+    button ++ ;
+    if (button==4) {
+      button=0;
+    }
+  }
+
+  for (byte i=0;i<3;i++){
+    digitalWrite(LED[i],LOW);
+ }
+
+ for(byte i=0;i<button;i++) {
+   digitalWrite(LED[i],HIGH);
+   }
+
+ 
+}
